@@ -18,7 +18,7 @@
 #
 
 FROM openjdk:8-jdk
-USER eric:staff
+USER root
 # Install some utilities
 RUN apt-get update && apt-get install -y netcat dnsutils python-kazoo python-yaml python-pip python3 python3-pip python3-yaml python3-pip
 
@@ -42,6 +42,7 @@ RUN /pulsar/bin/install-pulsar-client-35.sh
 RUN echo networkaddress.cache.ttl=1 >> $JAVA_HOME/jre/lib/security/java.security
 
 WORKDIR /pulsar
+USER eric:staff
 
 VOLUME  ["/pulsar/conf", "/pulsar/data"]
 
