@@ -18,23 +18,23 @@
 #
 
 FROM openjdk:8-jdk
-
+USER eric:staff
 # Install some utilities
 RUN apt-get update && apt-get install -y netcat dnsutils python-kazoo python-yaml python-pip python3 python3-pip python3-yaml python3-pip
 
 ARG PULSAR_TARBALL
 
-ADD ${PULSAR_TARBALL} /
+ADD --chown=eric:staff  ${PULSAR_TARBALL} /
 RUN mv /apache-pulsar-* /pulsar
 
-COPY scripts/apply-config-from-env.py /pulsar/bin
-COPY scripts/gen-yml-from-env.py /pulsar/bin
-COPY scripts/generate-zookeeper-config.sh /pulsar/bin
-COPY scripts/pulsar-zookeeper-ruok.sh /pulsar/bin
-COPY scripts/watch-znode.py /pulsar/bin
-COPY scripts/set_python_version.sh /pulsar/bin
-COPY scripts/install-pulsar-client-27.sh /pulsar/bin
-COPY scripts/install-pulsar-client-35.sh /pulsar/bin
+COPY --chown=eric:staff scripts/apply-config-from-env.py /pulsar/bin
+COPY --chown=eric:staff scripts/gen-yml-from-env.py /pulsar/bin
+COPY --chown=eric:staff scripts/generate-zookeeper-config.sh /pulsar/bin
+COPY --chown=eric:staff scripts/pulsar-zookeeper-ruok.sh /pulsar/bin
+COPY --chown=eric:staff scripts/watch-znode.py /pulsar/bin
+COPY --chown=eric:staff scripts/set_python_version.sh /pulsar/bin
+COPY --chown=eric:staff scripts/install-pulsar-client-27.sh /pulsar/bin
+COPY --chown=eric:staff scripts/install-pulsar-client-35.sh /pulsar/bin
 
 ADD target/python-client/ /pulsar/pulsar-client
 RUN /pulsar/bin/install-pulsar-client-27.sh
